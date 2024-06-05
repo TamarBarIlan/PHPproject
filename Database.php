@@ -61,10 +61,7 @@ class Database {
 
 }
 
-// Create an instance of the Database class
 $db = new Database("localhost", "root", "", "test");
-
-// Connect to the database
 $db->connect();
 
 // Create the 'users' table if it doesn't exist
@@ -91,7 +88,6 @@ $json_data = file_get_contents("https://jsonplaceholder.typicode.com/users");
 $users = json_decode($json_data, true);
 
 foreach ($users as $user) {
-    // Insert user data without id (let it auto increment)
     $user_data = [
         'name' => $user['name'],
         'email' => $user['email'],
@@ -104,7 +100,6 @@ $json_data = file_get_contents("https://jsonplaceholder.typicode.com/posts");
 $posts = json_decode($json_data, true);
 
 foreach ($posts as $post) {
-    // Insert post data
     $post_data = [
         'user_id' => $post['userId'],
         'title' => $post['title'],
@@ -114,27 +109,6 @@ foreach ($posts as $post) {
     $db->insert('posts', $post_data);
 }
 
-
-
-// Disconnect from the database
 $db->disconnect();
-
-// Image retrieval and saving logic
-$imageUrl = "https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg";
-$savePath = __DIR__ . "/default-avatar.jpg"; // Save in the same directory as this script
-
-$imageData = file_get_contents($imageUrl);
-
-if ($imageData === FALSE) {
-    die("Error: Unable to fetch the image from the URL.");
-}
-
-$result = file_put_contents($savePath, $imageData);
-
-if ($result === FALSE) {
-    die("Error: Unable to save the image on the server.");
-}
-
-echo "Image successfully saved as $savePath.";
 
 ?>
